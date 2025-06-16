@@ -528,7 +528,7 @@ def build_E3_equivariant_model(
             }
         )
         layers.update(interaction_builder(**param_interaction_block))
-        irreps_x = irreps_out
+        irreps_x = irreps_out + Irreps('1x0e')
 
     layers.update(init_feature_reduce(config, irreps_x))  # type: ignore
 

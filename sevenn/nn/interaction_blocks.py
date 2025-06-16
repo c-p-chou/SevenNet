@@ -5,6 +5,7 @@ from torch.nn import Module
 
 import sevenn._keys as KEY
 
+from .charge_equilibrium import ChargeEquilibrium, GlobalScalarEmbedding
 from .convolution import IrrepsConvolution
 from .equivariant_gate import EquivariantGate
 from .linear import IrrepsLinear
@@ -24,7 +25,7 @@ def NequIP_interaction_block(
     act_radial: Callable,
     bias_in_linear: bool,
     num_species: int,
-    t: int,   # interaction layer index
+    t: int,  # interaction layer index
     data_key_x: str = KEY.NODE_FEATURE,
     data_key_weight_input: str = KEY.EDGE_EMBEDDING,
     parallel: bool = False,
@@ -44,7 +45,8 @@ def NequIP_interaction_block(
     )
 
     block[f'{t}_self_interaction_1'] = IrrepsLinear(
-        irreps_x, irreps_x,
+        irreps_x,
+        irreps_x,
         data_key_in=data_key_x,
         biases=bias_in_linear,
     )
@@ -73,5 +75,7 @@ def NequIP_interaction_block(
 
     block[f'{t}_self_connection_outro'] = sc_outro()
     block[f'{t}_equivariant_gate'] = gate_layer
+    block[f'{t}_charge_equilibrium'] = ChargeEquilibrium()
+    block[f'{t}_charge_embedding'] = GlobalScalarEmbedding(KEY.PARTIAL_CHARGE)
 
     return block
