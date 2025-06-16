@@ -13,6 +13,7 @@ if Version(e3nn_ver) < Version('0.5.0'):
     )
 
 from .nn.charge_equilibrium import ChargeEquilibrium
+from .nn.global_embedding import GlobalScalarEmbedding
 from .qeq import charge_equilibrium
 
-__all__ = ['charge_equilibrium', 'ChargeEquilibrium']
+__all__ = ['charge_equilibrium', 'ChargeEquilibrium', 'GlobalScalarEmbedding']
