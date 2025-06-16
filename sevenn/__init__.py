@@ -11,3 +11,7 @@ if Version(e3nn_ver) < Version('0.5.0'):
         'The e3nn version MUST be 0.5.0 or later due to changes in CG coefficient '
         'convention.'
     )
+
+from .qeq import charge_equilibrium
+
+__all__ = ['charge_equilibrium']
