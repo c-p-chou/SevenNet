@@ -12,6 +12,7 @@ if Version(e3nn_ver) < Version('0.5.0'):
         'convention.'
     )
 
+from .nn.charge_equilibrium import ChargeEquilibrium
 from .qeq import charge_equilibrium
 
-__all__ = ['charge_equilibrium']
+__all__ = ['charge_equilibrium', 'ChargeEquilibrium']

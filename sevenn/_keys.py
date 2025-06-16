@@ -38,9 +38,7 @@ ATOM_TYPE: Final[str] = 'atom_type'  # (N) one-hot index of nodes
 NODE_FEATURE: Final[str] = 'x'  # (N, ?) PyG
 NODE_FEATURE_GHOST: Final[str] = 'x_ghost'
 NODE_ATTR: Final[str] = 'node_attr'  # (N, N_species) from one_hot
-MODAL_ATTR: Final[str] = (
-    'modal_attr'  # (1, N_modalities) for handling multi-modal
-)
+MODAL_ATTR: Final[str] = 'modal_attr'  # (1, N_modalities) for handling multi-modal
 MODAL_TYPE: Final[str] = 'modal_type'  # (1) one-hot index of modal
 EDGE_ATTR: Final[str] = 'edge_attr'  # (from spherical harmonics)
 EDGE_EMBEDDING: Final[str] = 'edge_embedding'  # (from edge embedding)
@@ -66,6 +64,11 @@ SCALED_FORCE: Final[str] = 'scaled_force'
 
 PRED_STRESS: Final[str] = 'inferred_stress'
 SCALED_STRESS: Final[str] = 'scaled_stress'
+
+# charge equilibration related
+EFFECTIVE_ELECTRONEGATIVITY: Final[str] = 'chi_eff'
+SELF_INTERACTION: Final[str] = 'j_ii'
+PARTIAL_CHARGE: Final[str] = 'partial_charge'
 
 # very general data property for AtomGraphData
 NUM_ATOMS: Final[str] = 'num_atoms'  # int
@@ -131,9 +134,7 @@ RESET_OPTIMIZER = 'reset_optimizer'
 RESET_SCHEDULER = 'reset_scheduler'
 RESET_EPOCH = 'reset_epoch'
 USE_STATISTIC_VALUES_OF_CHECKPOINT = 'use_statistic_values_of_checkpoint'
-USE_STATISTIC_VALUES_FOR_CP_MODAL_ONLY = (
-    'use_statistic_values_for_cp_modal_only'
-)
+USE_STATISTIC_VALUES_FOR_CP_MODAL_ONLY = 'use_statistic_values_for_cp_modal_only'
 
 CSV_LOG = 'csv_log'
 
