@@ -162,16 +162,16 @@ def test_batch():
 
 
 _n_param_tests = [
-    ({}, 20642),
-    ({'train_denominator': True}, 20642 + 3),
-    ({'train_shift_scale': True}, 20642 + 2),
-    ({'shift': [1.0] * 4}, 20642),
-    ({'scale': [1.0] * 4, 'train_shift_scale': True}, 20642 + 8),
-    ({'num_convolution_layer': 4}, 33458),
-    ({'lmax': 3}, 26866),
-    ({'channel': 2}, 16883),
-    ({'is_parity': False}, 20386),
-    ({'self_connection_type': 'linear'}, 20114),
+    ({}, 20666),
+    ({'train_denominator': True}, 20669),
+    ({'train_shift_scale': True}, 20668),
+    ({'shift': [1.0] * 4}, 20666),
+    ({'scale': [1.0] * 4, 'train_shift_scale': True}, 20674),
+    ({'num_convolution_layer': 4}, 33490),
+    ({'lmax': 3}, 26890),
+    ({'channel': 2}, 16895),
+    ({'is_parity': False}, 20410),
+    ({'self_connection_type': 'linear'}, 20138),
 ]
 
 
@@ -183,11 +183,11 @@ def test_num_params(cf, ref):
 
 
 _n_modal_param_tests = [
-    ({}, 20642),
-    ({'use_modal_node_embedding': True}, 20642 + 8),
-    ({'use_modal_self_inter_intro': True}, 20642 + 2 * 4 * 3),
-    ({'use_modal_self_inter_outro': True}, 20642 + 2 * (12 + 20 + 4)),
-    ({'use_modal_output_block': True}, 20642 + 2 * 4 / 2),
+    ({}, 20666),
+    ({'use_modal_node_embedding': True}, 20674),
+    ({'use_modal_self_inter_intro': True}, 20690),
+    ({'use_modal_self_inter_outro': True}, 20738),
+    ({'use_modal_output_block': True}, 20670),
 ]
 
 
