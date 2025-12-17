@@ -4,9 +4,11 @@ from ase.build import bulk, molecule
 from ase.data import chemical_symbols
 from torch_geometric.loader.dataloader import Collater
 
+import sevenn._keys as KEY
 import sevenn.train.dataload as dl
 from sevenn.atom_graph_data import AtomGraphData
 from sevenn.model_build import build_E3_equivariant_model
+from sevenn.nn.charge_equilibrium import GlobalScalarEmbedding
 from sevenn.nn.sequential import AtomGraphSequential
 from sevenn.util import chemical_species_preprocess
 
@@ -161,17 +163,28 @@ def test_batch():
     )
 
 
+def test_charge_embedding_concat():
+    data = AtomGraphData(x=torch.zeros(3, 4))
+    data[KEY.PARTIAL_CHARGE] = torch.arange(3.0).view(3, 1)
+    module = GlobalScalarEmbedding(KEY.PARTIAL_CHARGE)
+    output = module(data)
+    assert KEY.PARTIAL_CHARGE in output
+    assert output[KEY.NODE_FEATURE].shape[1] == 5
+    expected = module.linear(data[KEY.PARTIAL_CHARGE])
+    assert torch.allclose(output[KEY.NODE_FEATURE][:, -1:], expected)
+
+
 _n_param_tests = [
-    ({}, 20642),
-    ({'train_denominator': True}, 20642 + 3),
-    ({'train_shift_scale': True}, 20642 + 2),
-    ({'shift': [1.0] * 4}, 20642),
-    ({'scale': [1.0] * 4, 'train_shift_scale': True}, 20642 + 8),
-    ({'num_convolution_layer': 4}, 33458),
-    ({'lmax': 3}, 26866),
-    ({'channel': 2}, 16883),
-    ({'is_parity': False}, 20386),
-    ({'self_connection_type': 'linear'}, 20114),
+    ({}, 21052),
+    ({'train_denominator': True}, 21055),
+    ({'train_shift_scale': True}, 21054),
+    ({'shift': [1.0] * 4}, 21052),
+    ({'scale': [1.0] * 4, 'train_shift_scale': True}, 21060),
+    ({'num_convolution_layer': 4}, 34179),
+    ({'lmax': 3}, 27384),
+    ({'channel': 2}, 17220),
+    ({'is_parity': False}, 20756),
+    ({'self_connection_type': 'linear'}, 20452),
 ]
 
 
@@ -183,11 +196,11 @@ def test_num_params(cf, ref):
 
 
 _n_modal_param_tests = [
-    ({}, 20642),
-    ({'use_modal_node_embedding': True}, 20642 + 8),
-    ({'use_modal_self_inter_intro': True}, 20642 + 2 * 4 * 3),
-    ({'use_modal_self_inter_outro': True}, 20642 + 2 * (12 + 20 + 4)),
-    ({'use_modal_output_block': True}, 20642 + 2 * 4 / 2),
+    ({}, 21052),
+    ({'use_modal_node_embedding': True}, 21060),
+    ({'use_modal_self_inter_intro': True}, 21080),
+    ({'use_modal_self_inter_outro': True}, 21124),
+    ({'use_modal_output_block': True}, 21056),
 ]
 
 
